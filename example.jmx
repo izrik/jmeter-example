@@ -34,6 +34,11 @@
             <stringProp name="Argument.value">https</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="delay_before_request_milliseconds" elementType="Argument">
+            <stringProp name="Argument.name">delay_before_request_milliseconds</stringProp>
+            <stringProp name="Argument.value">${__P(delay_before_request_milliseconds,0)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -68,7 +73,23 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">sleep_time = (vars.get(&quot;delay_before_request_milliseconds&quot;) ?: 0) as int
+
+//log.info(&quot;var is: &quot; + vars.get(&quot;delay_before_request_milliseconds&quot;))
+//log.info(&quot;prop is: &quot; + props.get(&quot;delay_before_request_milliseconds&quot;))
+//log.info(&quot;sleep_time is: &quot; + sleep_time)
+
+sleep(sleep_time)
+</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
